@@ -13,12 +13,12 @@ spring:
     name: apigateway-service
   cloud:
     gateway:
-      default-filters:
-        - name: GlobalFilter
-          args:
-            baseMessage: Spring Cloud Gateway Global Filter
-            preLogger: true
-            postLogger: true
+#      default-filters:
+#        - name: GlobalFilter
+#          args:
+#            baseMessage: Spring Cloud Gateway Global Filter
+#            preLogger: true
+#            postLogger: true
       routes:
 #        - id: user-service
 #          uri: lb://USER-SERVICE
@@ -31,7 +31,7 @@ spring:
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewrotePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -39,7 +39,7 @@ spring:
             - Method=POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewrotePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -47,7 +47,7 @@ spring:
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
-            - RewrotePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:

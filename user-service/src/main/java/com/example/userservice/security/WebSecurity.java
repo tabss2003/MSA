@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+    private  UserService userService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private Environment env;
 
@@ -28,18 +28,20 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/users/**").permitAll();
-        http.authorizeRequests().antMatchers("/**")
-                .hasIpAddress("192.168.0.10")
-                        .and()
-                                .addFilter(getAuthenticationFilter());
+        http.authorizeRequests().antMatchers("/users/**").permitAll()
+//        http.authorizeRequests()
+//                .antMatchers("/error/**").permitAll() // error에 대한 요청의 권한을 체크하면서 발생하는 부분
+//                .antMatchers("/**")
+//                .hasIpAddress("121.178.98.22")
+                .and()
+                .addFilter(getAuthenticationFilter());
         // h2에서는 데이터가 프레임 별로 나눠져 있는데 그걸 무시해야 h2 console 접근 가능
         http.headers().frameOptions().disable();
     }
 
     private AuthenticationFilter getAuthenticationFilter() throws Exception{
-        AuthenticationFilter authenticationFilter = new AuthenticationFilter();
-        authenticationFilter.setAuthenticationManager(authenticationManager());
+        AuthenticationFilter authenticationFilter = new AuthenticationFilter(authenticationManager(), userService, env);
+//        authenticationFilter.setAuthenticationManager(authenticationManager());
 
         return authenticationFilter;
     }
