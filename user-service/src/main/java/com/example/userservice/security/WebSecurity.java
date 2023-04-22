@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests()
 //                .antMatchers("/actuator/**").permitAll() // error에 대한 요청의 권한을 체크하면서 발생하는 부분
 //                .antMatchers("/**")
-//                .hasIpAddress("121.178.98.22")
+//                .hasIpAddress("192.168.0.10")
                 .and()
                 .addFilter(getAuthenticationFilter());
         // h2에서는 데이터가 프레임 별로 나눠져 있는데 그걸 무시해야 h2 console 접근 가능
