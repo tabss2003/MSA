@@ -11,6 +11,7 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,11 +70,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping(value = "/users/{userId}")
     public ResponseEntity<ResponseUser> getUser(@PathVariable("userId") String userId){
         UserDto userDto = userService.getUserByUserId(userId);
 
         ResponseUser returnValue = new ModelMapper().map(userDto,ResponseUser.class);
-        return ResponseEntity.ok(returnValue);
+        return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
 }

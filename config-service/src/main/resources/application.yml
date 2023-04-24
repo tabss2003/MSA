@@ -7,13 +7,19 @@ server:
 spring:
   application:
     name: config-service
-  profiles:
-    active: native
+#  profiles:
+#    active: native
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    stream:
+      username: guest
+      password: guest
   cloud:
     config:
       server:
-        native:
-          search-locations: file:///${user.home}/SSAFY/workspace/010.MSA/MSA/native-file-repo
+#        native:
+#          search-locations: file:///${user.home}/SSAFY/workspace/010.MSA/MSA/native-file-repo
         git:
 #          uri: file:/C:/SSAFY/workspace/010.MSA/MSA/git-local-repo/
           default-label: master
@@ -21,3 +27,9 @@ spring:
 #          github에서 default branch를 master가 아닌 main으로 변경되었다.
 #
 #그러나 여전히 master branch를 설정으로 인식하는 경우에 발생하는 에러이다.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
